@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 style="color: yellow">{{ title }}, {{ content }}</h1>
+<p>Your ID = {{ id }}</p>
+<ul>
+  {% for i in object_list %}
+    {% if i.title %}
+      <li><a href="/articles/{{ i.id }}" target="_blank" style="text-decoration: none;">{{ i.title }} {{ i.content }}</a></li>
+    {% endif %}
+  {% endfor %}
+</ul>
+<br>
+<form action="/create-articles/" target="_blank">
+  <button type="submit">Create Article</button>
+</form>
+<br>
+<form action="/articles/" target="_blank">
+  <input type="text" name="q">
+  <input type="submit">
+</form>
+{% endblock content %}
