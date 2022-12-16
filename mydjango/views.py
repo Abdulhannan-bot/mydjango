@@ -20,6 +20,7 @@ def home_view(request, *args, **kwargs):
   # article_title = article_obj.title
   # article_title = article_obj.content
   article_queryset = Article.objects.all()
+  
 
   # number = random.randint(19,12322)
   # country = 'united-arab-emirates'

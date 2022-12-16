@@ -1,13 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-{% if object %}
-<h1>{{ object.title }}</h1>
-<p>{{ object.content }}</p>
-{% endif %}
-<form action="/articles/" target="_blank">
+<form action="/articles/">
   <input type="text" name="q">
   <input type="submit">
 </form>
+<ol>
+  {% for i in object_list %}
+  {% if i.title %}
+  <li><a href="{{ i.get_absolute_url }}">{{ i.title }}</a></li>
+  {% endif %}
+  {% endfor %}
+</ol>
 {% endblock %}

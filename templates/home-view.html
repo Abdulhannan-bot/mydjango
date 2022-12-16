@@ -3,19 +3,39 @@
 {% block content %}
 <h1 style="color: yellow">{{ title }}, {{ content }}</h1>
 <p>Your ID = {{ id }}</p>
-<ul>
+<!-- <ul>
   {% for i in object_list %}
     {% if i.title %}
-      <li><a href="/articles/{{ i.id }}" target="_blank" style="text-decoration: none;">{{ i.title }} {{ i.content }}</a></li>
+      <li><a href="/articles/{{ i.id }}" target="_blank" style="text-decoration: none;">{{ i.title }} {{ i.content }} {{ i.timestamp }} {{ i.updated }}</a></li>
     {% endif %}
   {% endfor %}
-</ul>
+</ul> -->
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Content</th>
+      <th>Timestamp</th>
+      <th>Updated</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in object_list %}
+    <tr>
+      <th><a href='{% url "article-detail" slug=i.slug %}' style="text-decoration: none;">{{ i.title }}</a></th> <!--{{ i.get_absolute_url }} -->
+      <th>{{ i.content }}</th>
+      <th>{{ i.timestamp }}</th>
+      <th>{{ i.updated }}</th>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 <br>
-<form action="/create-articles/" target="_blank">
+<form action="/create-articles/">
   <button type="submit">Create Article</button>
 </form>
 <br>
-<form action="/articles/" target="_blank">
+<form action="/articles/">
   <input type="text" name="q">
   <input type="submit">
 </form>
