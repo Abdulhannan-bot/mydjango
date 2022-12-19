@@ -17,10 +17,12 @@ from django.contrib import admin
 from django.urls import path
 from articles import views
 from .views import home_view
+from django.urls import include
 
 urlpatterns = [
     path('', home_view), # home, index, root
-    path('articles/', views.article_search_view),
+    path('pantry/recipes/', include('recipes.urls')),
+    path('articles/', views.article_search_view, name="search"),
     path('create-articles/', views.article_create_view, name = "article-create"),
     path('articles/<slug:slug>/', views.article_detail_view, name = "article-detail"), #path('articles/<int:id>/'
     path('admin/', admin.site.urls),

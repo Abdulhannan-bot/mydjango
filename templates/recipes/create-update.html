@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+  .ingredient-form {
+    border-bottom: 1px solid black;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+</style>
+
+{% if message %}
+<p>{{ message }}</p>
+{% endif %}
+
+
+<div style="margin-top:30px;">
+  <form action='' method="POST">
+    {% csrf_token %}
+    <div style="display: flex; flex-direction: column; justify-content: flex-start; width: fit-content; margin: 0 auto; border: 2px solid black;">
+      {% for field in form_recipe %}
+      <div class="{% if field.field.required %}required-class{% endif %}" style="display: flex; flex-direction: row; flex: 30% 70%; justify-content: space-between;">
+        <!-- {{ field.errors }} -->
+        <div>{{ field.label_tag }}</div>
+        <div style="display: flex; justify-content: center;">
+          <div>{{ field }}</div>
+        </div>
+       
+        
+        
+        <!-- {{ form_recipe.as_p }} -->
+      </div>
+      {% endfor %}
+    </div>
+
+    {% if formset %}
+    <br>
+    <h1>Ingredients</h1>
+    
+    <!-- {{ formset.as_p }} -->
+    {{ formset.management_form }}
+    <div class="ingredient-form-list">
+      {% for form in formset %}
+        <div class="ingredient-form">
+          {{ form.as_p }}
+        </div>  
+      {% endfor %}
+    </div>
+
+    <div id="empty-form" class="hidden">
+      {{ formset.empty_form.as_p }}
+    </div>
+    
+    
+    <button style="margin-top: 2rem;" type="submit" class="btn-add">Add More</button>
+    {% endif %}
+    <div>
+      
+      <button style="margin-top: 2rem;" type="submit">Create Recipe</button>
+    </div>
+    
+  </form>
+</div>
+
+<script>
+  const addMoreBtn = document.querySelector(`.btn-add`)
+  const extra = document.getElementById(`id_form-__prefix__-id`)
+  // const data = localStorage.getItem('allData')
+  const currentIngredientForms = document.getElementsByClassName(`ingredient-form`)
+  
+    
+  const totalNewForms = document.getElementById(`id_form-TOTAL_FORMS`)
+  // console.log(extra.value);
+
+  const addNewForm = function(e) {
+    e.preventDefault();
+    // if(data) {
+    //   currentIngredientForms = data
+    // }
+    // else {
+    //   currentIngredientForms = document.getElementsByClassName(`ingredient-form`)
+    // }
+    const formContent = document.querySelector(`.ingredient-form-list`)
+    const emptyFormEl = document.getElementById(`empty-form`).cloneNode(true)
+    const formCount = currentIngredientForms.length
+    emptyFormEl.setAttribute('class','ingredient-form')
+    emptyFormEl.setAttribute('id',`form-${formCount}`)
+    const regex = new RegExp('__prefix__','g')
+    emptyFormEl.innerHTML= emptyFormEl.innerHTML.replace(regex,formCount)
+    totalNewForms.setAttribute('value',formCount+1)
+    formContent.append(emptyFormEl)
+    console.log(formContent.childNodes);
+    console.log(currentIngredientForms);
+    // console.log(currentIngredientForms.length);
+  }
+
+  addMoreBtn.addEventListener(`click`,addNewForm)
+  console.log(currentIngredientForms);
+  // localStorage.setItem('allData', currentIngredientForms)
+
+
+</script>
+
+{% endblock %}

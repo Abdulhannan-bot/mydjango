@@ -5,10 +5,12 @@ from django.db.models.signals import pre_save, post_save
 from django.urls import reverse
 import random
 from django.db.models import Q
-
+from django.conf import settings
 
 from .utils import slugify_instance_title
 
+
+User = settings.AUTH_USER_MODEL
 
 class ArticleQuerySet(models.QuerySet):
   def search(self,query=None):
@@ -29,6 +31,7 @@ class ArticleManager(models.Manager):
 # Create your models here.
 
 class Article(models.Model):
+  user = models.ForeignKey(User, blank = True, null = True, on_delete=models.SET_NULL)
   title = models.CharField(max_length=120)
   slug = models.SlugField(unique = True, blank = True, null = True)
   content = models.TextField()

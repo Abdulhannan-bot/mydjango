@@ -1,0 +1,23 @@
+{% extends "base.html" %} {% block content %}
+<h1>
+  {{ object.name }}{% if object.get_edit_url %}<small
+    ><a href="{{ object.get_edit_url }}" style="padding-left: 2rem"
+      >✍️</a
+    ></small
+  >
+  <small
+    ><a href="{{ object.get_delete_url }}" style="padding-left: 2rem"
+      >✂️</a
+    ></small
+    >{% endif %}
+  
+</h1>
+<p>{{ object.description }}</p>
+<p>{{ object.directions }}</p>
+<br />
+<h2>Ingredients</h2>
+{% for ingredient in object.ingredients_children %}
+<p style="font-weight: bold">{{ ingredient.name }} <small><a href="{% url 'recipes:delete_recipe' parent_id=object.id id=ingredient.id %}">delete</a></small></p>
+<p>{{ ingredient.to_mks }}</p>
+<p>{{ ingredient.to_imperial }}</p>
+{% endfor %} {% endblock %}

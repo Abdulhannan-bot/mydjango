@@ -26,6 +26,8 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = str(os.environ.get('DEBUG')) == "1"
+print(DEBUG)
+# DEBUG = False
 
 ALLOWED_HOSTS = []
 if not DEBUG:
@@ -45,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'articles',
+    'recipes',
 ]
 
 MIDDLEWARE = [

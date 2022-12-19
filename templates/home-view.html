@@ -10,6 +10,15 @@
     {% endif %}
   {% endfor %}
 </ul> -->
+<form action="/create-articles/">
+  <button type="submit">Create Article</button>
+</form>
+<br>
+<form action="/articles/">
+  <input type="text" name="q" placeholder="Search Articles">
+  <input type="submit">
+</form>
+<br>
 <table>
   <thead>
     <tr>
@@ -30,13 +39,4 @@
     {% endfor %}
   </tbody>
 </table>
-<br>
-<form action="/create-articles/">
-  <button type="submit">Create Article</button>
-</form>
-<br>
-<form action="/articles/">
-  <input type="text" name="q">
-  <input type="submit">
-</form>
 {% endblock content %}
